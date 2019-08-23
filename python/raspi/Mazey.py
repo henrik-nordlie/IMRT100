@@ -12,7 +12,7 @@ LEFT = -1
 RIGHT = 1
 FORWARDS = 1
 BACKWARDS = -1
-DRIVING_SPEED = 150
+DRIVING_SPEED = 175
 TURNING_SPEED = 150
 TURN_DISTANCE = 15
 STOP_DISTANCE = 5
@@ -139,11 +139,13 @@ while not motor_serial.shutdown_now :
         elif dist_4 < TURN_DISTANCE:
             turn_robot_slight_left()
         else:
-            drive_robot(BACKWARDS, 0.1)
+            drive_robot(BACKWARDS, 0.3)
             if dist_1 > dist_4:
                 turn_robot_slight_right()
-            else:
+            elif dist_4 > dist_1:
                 turn_robot_slight_left()
+            else:
+                turn_robot_slight_right()
 
     #elif  dist_2 < STOP_DISTANCE or dist_3 < STOP_DISTANCE:
     #    drive_robot(BACKWARDS, 0.1)
