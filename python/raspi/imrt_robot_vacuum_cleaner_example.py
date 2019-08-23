@@ -12,9 +12,9 @@ LEFT = -1
 RIGHT = 1
 FORWARDS = 1
 BACKWARDS = -1
-DRIVING_SPEED = 100
-TURNING_SPEED = 100
-STOP_DISTANCE = 25
+DRIVING_SPEED = 150
+TURNING_SPEED = 150
+STOP_DISTANCE = 15
 
 def stop_robot(duration):
 
@@ -36,18 +36,43 @@ def drive_robot(direction, duration):
         time.sleep(0.10)
 
 
+def turn_robot_right():
 
-def turn_robot_random_angle():
-
-    direction = random.choice([-1,1])
-    iterations = random.randint(10, 25)
+    direction = 1
+    iterations = random.randint(9, 9)
     
     for i in range(iterations):
         motor_serial.send_command(TURNING_SPEED * direction, -TURNING_SPEED * direction)
         time.sleep(0.10)
 
+def turn_robot_left():
 
+    direction = -1
+    iterations = random.randint(9, 9)
+    
+    for i in range(iterations):
+        motor_serial.send_command(TURNING_SPEED * direction, -TURNING_SPEED * direction)
+        time.sleep(0.10)
 
+def turn_robot_slight_left():
+
+    direction = -1
+    iterations = random.randint(1, 1)
+    
+    for i in range(iterations):
+        motor_serial.send_command(TURNING_SPEED * direction, -TURNING_SPEED * direction)
+        time.sleep(0.10)
+
+def turn_robot_slight_right():
+
+    direction = 1
+    iterations = random.randint(1, 1)
+    
+    for i in range(iterations):
+        motor_serial.send_command(TURNING_SPEED * direction, -TURNING_SPEED * direction)
+        time.sleep(0.10)
+        
+        
 # We want our program to send commands at 10 Hz (10 commands per second)
 execution_frequency = 10 #Hz
 execution_period = 1. / execution_frequency #seconds
@@ -98,20 +123,45 @@ while not motor_serial.shutdown_now :
     # Get and print readings from distance sensors
     dist_1 = motor_serial.get_dist_1()
     dist_2 = motor_serial.get_dist_2()
-    print("Dist 1:", dist_1, "   Dist 2:", dist_2)
+    dist_3 = motor_serial.get_dist_3()
+    dist_4 = motor_serial.get_dist_4()
+    print("Dist 1:", dist_1, "   Dist 2:", dist_2, "  Dist 3:", dist_3, "   Dist 4:", dist_4)
 
     # Check if there is an obstacle in the way
+
     if dist_1 < STOP_DISTANCE or dist_2 < STOP_DISTANCE:
-        # There is an obstacle in front of the robot
+        # There is an obstacle to the left of the robot
         # First let's stop the robot for 1 second
         print("Obstacle!")
         stop_robot(1)
 
-        # Reverse for 0.5 second
-        drive_robot(BACKWARDS, 0.5)
+        # Reverse for 0.3 seconds
+        drive_robot(BACKWARDS, 0.3)
 
         # Turn random angle
-        turn_robot_random_angle()
+        turn_robot_right()
+
+    elif dist_3 < STOP_DISTANCE or dist_4 < STOP_DISTANCE:
+        # There is an obstacle to the right of the robot
+        # First let's stop the robot for 1 second
+        print("Obstacle!")
+        stop_robot(1)
+
+        # Reverse for 0.3 seconds
+        drive_robot(BACKWARDS, 0.3)
+
+        # Turn random angle
+        turn_robot_left()
+
+    elif dist_1 < 20:
+        #If wall to the left, turn slightly to the right
+        turn_robot_slight_right()
+        print("Correcting")
+
+    elif dist_4 < 20:
+        #If wall to the right, turn slightly to the left
+        turn_robot_slight_left()
+        print("Correcting")
         
 
     else:
