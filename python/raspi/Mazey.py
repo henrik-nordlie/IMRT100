@@ -12,10 +12,10 @@ LEFT = -1
 RIGHT = 1
 FORWARDS = 1
 BACKWARDS = -1
-DRIVING_SPEED = 175
+DRIVING_SPEED = 185
 TURNING_SPEED = 150
 TURN_DISTANCE = 15
-STOP_DISTANCE = 5
+STOP_DISTANCE = 7
 
 def stop_robot(duration):
 
@@ -40,7 +40,7 @@ def drive_robot(direction, duration):
 def turn_robot_right():
 
     direction = 1
-    iterations = random.randint(9, 9)
+    iterations = (2)
     
     for i in range(iterations):
         motor_serial.send_command(TURNING_SPEED * direction, -TURNING_SPEED * direction)
@@ -49,7 +49,7 @@ def turn_robot_right():
 def turn_robot_left():
 
     direction = -1
-    iterations = random.randint(9, 9)
+    iterations = (9)
     
     for i in range(iterations):
         motor_serial.send_command(TURNING_SPEED * direction, -TURNING_SPEED * direction)
@@ -62,7 +62,7 @@ def turn_robot_slight_left():
     
     for i in range(iterations):
         motor_serial.send_command(TURNING_SPEED * direction, -TURNING_SPEED * direction)
-        time.sleep(0.10)
+        time.sleep(0.05)
 
 def turn_robot_slight_right():
 
@@ -130,6 +130,28 @@ while not motor_serial.shutdown_now :
 
     # Check if there is an obstacle in the way
 
+    if dist_1 < TURN_DISTANCE or dist_2 < TURN_DISTANCE:
+        if dist_2 < STOP_DISTANCE:
+            drive_robot(BACKWARDS, 0.3)
+            turn_robot_slight_right()
+        else:
+            turn_robot_slight_right()
+    elif dist_3 < TURN_DISTANCE or dist_4 < TURN_DISTANCE:
+        if dist_3 < STOP_DISTANCE:
+            drive_robot(BACKWARDS, 0.3)
+            turn_robot_slight_left()
+        else:
+            turn_robot_slight_left()
+    elif dist_4 < 150:
+        if dist_4 > 60:
+            drive_robot(FORWARDS, 0.1)
+            turn_robot_right()
+        else:
+            drive_robot(FORWARDS, 0.1)
+    else:
+        # If there is nothing in front of the robot it continus driving forwards
+        drive_robot(FORWARDS, 0.1)
+'''
     if dist_1 < TURN_DISTANCE or dist_2 < TURN_DISTANCE or dist_3 < TURN_DISTANCE or dist_4 < TURN_DISTANCE:
         # There is an obstacle in front of the robot
         # Turn slightly to the side with more room
@@ -146,6 +168,8 @@ while not motor_serial.shutdown_now :
                 turn_robot_slight_left()
             else:
                 turn_robot_slight_right()
+'''
+
 
     #elif  dist_2 < STOP_DISTANCE or dist_3 < STOP_DISTANCE:
     #    drive_robot(BACKWARDS, 0.1)
@@ -153,10 +177,10 @@ while not motor_serial.shutdown_now :
     #        turn_robot_slight_left()
     #   else:
     #        turn_robot_slight_right()
-    
-    else:
+
+    #else:
         # If there is nothing in front of the robot it continus driving forwards
-        drive_robot(FORWARDS, 0.1)
+        #drive_robot(FORWARDS, 0.1)
 
 
         
