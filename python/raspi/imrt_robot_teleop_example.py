@@ -51,8 +51,8 @@ if __name__ == '__main__':
     # Create bluedot object
     bd = bluedot.BlueDot()
 
-    vx_gain = 1
-    wz_gain = 2
+    vx_gain = 1.5
+    wz_gain = 2.5
    
     
 
@@ -71,8 +71,8 @@ if __name__ == '__main__':
             print(vx, wz)
 
             # calculate motor commands
-            v1 = (vx - ROBOT_WIDTH * wz / 2) * 200
-            v2 = (vx + ROBOT_WIDTH * wz / 2) * 200
+            v1 = (vx - ROBOT_WIDTH * wz / 2) * 250
+            v2 = (vx + ROBOT_WIDTH * wz / 2) * 250
 
 
             

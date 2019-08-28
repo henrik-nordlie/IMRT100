@@ -13,10 +13,12 @@ RIGHT = 1
 FORWARDS = 1
 BACKWARDS = -1
 DRIVING_SPEED = 190
-TURNING_SPEED = 150
-TURN_DISTANCE = 20
-SIDE_DISTANCE = 8
-STOP_DISTANCE = 6
+TURNING_SPEED = 95
+RIGHT_TURN_DISTANCE = 15
+LEFT_TURN_DISTANCE = 15
+LEFT_DISTANCE = 20
+STOP_DISTANCE = 15
+RIGHT_DISTANCE = 8
 
 def stop_robot(duration):
 
@@ -58,7 +60,7 @@ def turn_robot_left():
 
 def turn_robot_around():
 
-    direction = 1
+    direction = -1
     iterations = (14)
     
     for i in range(iterations):
@@ -141,7 +143,7 @@ while not motor_serial.shutdown_now :
     # Check if there is an obstacle in the way
     
     # Obstacle on the left side
-    if dist_1 < SIDE_DISTANCE or dist_2 < TURN_DISTANCE:
+    if dist_1 < LEFT_DISTANCE or dist_2 < LEFT_TURN_DISTANCE:
         # Too close, back up and turn 180 degrees
         if dist_2 < STOP_DISTANCE:
             drive_robot(BACKWARDS, 0.3)
@@ -150,7 +152,7 @@ while not motor_serial.shutdown_now :
             turn_robot_slight_right()
             
     # Obstacle on the right side
-    elif dist_3 < TURN_DISTANCE or dist_4 < SIDE_DISTANCE:
+    elif dist_3 < RIGHT_TURN_DISTANCE or dist_4 < RIGHT_DISTANCE:
         # Too close, back up and turn left
         if dist_3 < STOP_DISTANCE:
             drive_robot(BACKWARDS, 0.3)
@@ -161,7 +163,7 @@ while not motor_serial.shutdown_now :
     # Too much room to the right        
     elif dist_4 < 150:
         if dist_4 > 60:
-            drive_robot(FORWARDS, 0.2)
+            drive_robot(FORWARDS, 0.3)
             turn_robot_right()
         else:
             drive_robot(FORWARDS, 0.1)
