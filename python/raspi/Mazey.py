@@ -16,9 +16,9 @@ DRIVING_SPEED = 190
 TURNING_SPEED = 95
 RIGHT_TURN_DISTANCE = 15
 LEFT_TURN_DISTANCE = 15
-LEFT_DISTANCE = 20
+LEFT_DISTANCE = 9
 STOP_DISTANCE = 15
-RIGHT_DISTANCE = 8
+RIGHT_DISTANCE = 9
 
 def stop_robot(duration):
 
@@ -43,7 +43,7 @@ def drive_robot(direction, duration):
 def turn_robot_right():
 
     direction = 1
-    iterations = (2)
+    iterations = (8)
     
     for i in range(iterations):
         motor_serial.send_command(TURNING_SPEED * direction, -TURNING_SPEED * direction)
@@ -52,7 +52,7 @@ def turn_robot_right():
 def turn_robot_left():
 
     direction = -1
-    iterations = (7)
+    iterations = (8)
     
     for i in range(iterations):
         motor_serial.send_command(TURNING_SPEED * direction, -TURNING_SPEED * direction)
@@ -85,7 +85,17 @@ def turn_robot_slight_right():
         motor_serial.send_command(TURNING_SPEED * direction, -TURNING_SPEED * direction)
         time.sleep(0.05)
         
+
+def turn_robot_medium_right():
+
+    direction = 1
+    iterations = (3)
+    
+    for i in range(iterations):
+        motor_serial.send_command(TURNING_SPEED * direction, -TURNING_SPEED * direction)
+        time.sleep(0.05)
         
+
 # We want our program to send commands at 10 Hz (10 commands per second)
 execution_frequency = 10 #Hz
 execution_period = 1. / execution_frequency #seconds
@@ -159,12 +169,12 @@ while not motor_serial.shutdown_now :
             turn_robot_left()
         else:
             turn_robot_slight_left()
-            
+
     # Too much room to the right        
     elif dist_4 < 150:
-        if dist_4 > 60:
-            drive_robot(FORWARDS, 0.3)
-            turn_robot_right()
+        if dist_4 > 53:
+            drive_robot(FORWARDS, 0.29)
+            turn_robot_medium_right()
         else:
             drive_robot(FORWARDS, 0.1)
             
