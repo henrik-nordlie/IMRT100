@@ -120,29 +120,8 @@ motor_serial.run()
 
 
 # Now we will enter a loop that will keep looping until the program terminates
-# The motor_serial object will inform us when it's time to exit the program
-# (say if the program is terminated by the user)
 print("Entering loop. Ctrl+c to terminate")
 while not motor_serial.shutdown_now :
-
-
-    ###############################################################
-    # This is the start of our loop. Your code goes below.        #
-    #                                                             #
-    # An example is provided to give you a starting point         #
-    # In this example we get the distance readings from each of   #
-    # the two distance sensors. Then we multiply each reading     #
-    # with a constant gain and use the two resulting numbers      #
-    # as commands for each of the two motors.                     #
-    #  ________________________________________________________   #
-    # |                                                        |  #
-    # V                                                           #
-    # V                                                           #
-    ###############################################################
-
-
-
-
 
 
     # Get and print readings from distance sensors
@@ -182,56 +161,6 @@ while not motor_serial.shutdown_now :
     # If there is nothing in front of the robot it continues driving forwards        
     else:
         drive_robot(FORWARDS, 0.1)
-'''
-    if dist_1 < TURN_DISTANCE or dist_2 < TURN_DISTANCE or dist_3 < TURN_DISTANCE or dist_4 < TURN_DISTANCE:
-        # There is an obstacle in front of the robot
-        # Turn slightly to the side with more room
-        print("Correcting!")
-        if dist_1 < TURN_DISTANCE:
-            turn_robot_slight_right()
-        elif dist_4 < TURN_DISTANCE:
-            turn_robot_slight_left()
-        else:
-            drive_robot(BACKWARDS, 0.3)
-            if dist_1 > dist_4:
-                turn_robot_slight_right()
-            elif dist_4 > dist_1:
-                turn_robot_slight_left()
-            else:
-                turn_robot_slight_right()
-'''
-
-
-    #elif  dist_2 < STOP_DISTANCE or dist_3 < STOP_DISTANCE:
-    #    drive_robot(BACKWARDS, 0.1)
-    #    if dist_1 > dist_4:
-    #        turn_robot_slight_left()
-    #   else:
-    #        turn_robot_slight_right()
-
-    #else:
-        # If there is nothing in front of the robot it continus driving forwards
-        #drive_robot(FORWARDS, 0.1)
-
-
-        
-                
-
-
-
-    ###############################################################
-    #                                                           A #
-    #                                                           A #
-    # |_________________________________________________________| #
-    #                                                             #
-    # This is the end of our loop,                                #
-    # execution continus at the start of our loop                 #
-    ###############################################################
-    ###############################################################
-
-
-
-
 
 # motor_serial has told us that its time to exit
 # we have now exited the loop
