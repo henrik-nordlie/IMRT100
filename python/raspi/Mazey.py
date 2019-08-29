@@ -45,7 +45,7 @@ def drive_robot(direction, duration):
 def turn_robot_right():
 
     direction = 1
-    iterations = (9)
+    iterations = (11)
     
     for i in range(iterations):
         motor_serial.send_command(TURNING_SPEED * direction, -TURNING_SPEED * direction)
@@ -54,7 +54,7 @@ def turn_robot_right():
 def turn_robot_left():
 
     direction = -1
-    iterations = (9)
+    iterations = (11)
     
     for i in range(iterations):
         motor_serial.send_command(TURNING_SPEED * direction, -TURNING_SPEED * direction)
